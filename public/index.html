@@ -2,36 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>All In One Downloader</title>
+<title>SnapTik Clone</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>💀 Downloader Pro</h1>
+<div class="header">
+    <h2>SnapTik</h2>
+</div>
 
-    <input type="text" id="url" placeholder="Paste link here..." />
-    
-    <select id="type">
-        <option value="auto">Auto Detect</option>
-        <option value="tiktok">TikTok</option>
-        <option value="instagram">Instagram</option>
-        <option value="youtube">YouTube</option>
-    </select>
+<div class="main">
 
-    <button onclick="download()">🚀 Download</button>
+    <h1>Download Video TikTok Tanpa Watermark</h1>
+
+    <div class="tabs">
+        <button class="active">Video</button>
+        <button>Mp3</button>
+        <button>Slideshow</button>
+        <button>Story</button>
+    </div>
+
+    <div class="input-box">
+        <input type="text" id="url" placeholder="Paste Link TikTok Disini..." />
+        <button onclick="paste()">Paste</button>
+    </div>
+
+    <button class="download-btn" onclick="getVideo()">⬇ Download</button>
 
     <!-- LOADING -->
-    <div id="loading" class="hidden">
-        <div class="loader"></div>
-        <p>Processing...</p>
-    </div>
+    <div id="loading" class="hidden">Loading...</div>
+
+    <!-- PREVIEW -->
+    <div id="preview"></div>
 
     <!-- RESULT -->
     <div id="result"></div>
 
-    <!-- PREVIEW -->
-    <div id="preview"></div>
 </div>
 
 <script src="script.js"></script>
