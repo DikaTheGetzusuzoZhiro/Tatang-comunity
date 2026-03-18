@@ -8,7 +8,7 @@
 <body>
 
 <div class="container">
-    <h1>🔥 All In One Downloader</h1>
+    <h1>💀 Downloader Pro</h1>
 
     <input type="text" id="url" placeholder="Paste link here..." />
     
@@ -19,9 +19,19 @@
         <option value="youtube">YouTube</option>
     </select>
 
-    <button onclick="download()">Download</button>
+    <button onclick="download()">🚀 Download</button>
 
+    <!-- LOADING -->
+    <div id="loading" class="hidden">
+        <div class="loader"></div>
+        <p>Processing...</p>
+    </div>
+
+    <!-- RESULT -->
     <div id="result"></div>
+
+    <!-- PREVIEW -->
+    <div id="preview"></div>
 </div>
 
 <script src="script.js"></script>
