@@ -1,15 +1,22 @@
-async function download() {
+async function paste() {
+    try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById("url").value = text;
+    } catch {
+        alert("Gagal paste");
+    }
+}
+
+async function getVideo() {
     const url = document.getElementById("url").value;
-    const type = document.getElementById("type").value;
 
     const loading = document.getElementById("loading");
-    const result = document.getElementById("result");
     const preview = document.getElementById("preview");
-
-    result.innerHTML = "";
-    preview.innerHTML = "";
+    const result = document.getElementById("result");
 
     loading.classList.remove("hidden");
+    preview.innerHTML = "";
+    result.innerHTML = "";
 
     try {
         const res = await fetch("/api/download", {
@@ -17,7 +24,7 @@ async function download() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ url, type })
+            body: JSON.stringify({ url })
         });
 
         const data = await res.json();
@@ -25,36 +32,38 @@ async function download() {
         loading.classList.add("hidden");
 
         if (!data.status) {
-            result.innerHTML = "❌ " + data.message;
+            result.innerHTML = "❌ Error";
             return;
         }
-
-        const link = data.download;
 
         // 🎬 PREVIEW VIDEO
         preview.innerHTML = `
             <video controls>
-                <source src="${link}" type="video/mp4">
+                <source src="${data.video}" type="video/mp4">
             </video>
         `;
 
         // 🔥 AUTO DOWNLOAD
         const a = document.createElement("a");
-        a.href = link;
-        a.download = "video.mp4";
+        a.href = data.video;
+        a.download = "tiktok.mp4";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
 
-        // BUTTON MANUAL
+        // BUTTON DOWNLOAD
         result.innerHTML = `
-            <a class="download-btn" href="${link}" download>
-                ⬇️ Download Manual
+            <a href="${data.video}" download>
+                ⬇ Download Video
+            </a>
+            <br><br>
+            <a href="${data.music}" download>
+                🎵 Download MP3
             </a>
         `;
 
     } catch (err) {
         loading.classList.add("hidden");
-        result.innerHTML = "❌ Error";
+        result.innerHTML = "❌ Server Error";
     }
 }
