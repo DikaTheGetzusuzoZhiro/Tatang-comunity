@@ -8,40 +8,39 @@ const client = new Client({
     ]
 });
 
-// Role ID sing bisa Reset/Hapus
-const ADMIN_ROLE_ID = '1479064744714567680';
+// KONFIGURASI
+const ID_ROLE_ADMIN = '1479064744714567680';
+let databaseClaim = new Map(); // Data user sing wis claim
 
-// Database sementara (Bakal reset nek bot mati/restart nang Railway)
-let claimedUsers = new Map(); 
-
-// Fungsi Token Harian (Sinkron karo Lua)
-function getDailyToken() {
-    const options = { timeZone: 'Asia/Jakarta', year: 'numeric', month: 'numeric', day: 'numeric' };
-    const formatter = new Intl.DateTimeFormat('en-US', options);
+// FUNGSI BUAT TOKEN (DIKUNCI KE WIB)
+function generateTokenHarian() {
+    const options = { timeZone: 'Asia/Jakarta', day: '2-digit', month: '2-digit', year: '2-digit' };
+    const formatter = new Intl.DateTimeFormat('id-ID', options);
     const parts = formatter.formatToParts(new Date());
     
-    let y, m, d;
+    let d, m, y;
     parts.forEach(p => {
-        if (p.type === 'year') y = parseInt(p.value);
-        if (p.type === 'month') m = parseInt(p.value);
-        if (p.type === 'day') d = parseInt(p.value);
+        if (p.type === 'day') d = p.value;
+        if (p.type === 'month') m = p.value;
+        if (p.type === 'year') y = p.value;
     });
 
-    // Rumus token unik saben dina (Ora bakal padha karo wingi)
-    const part1 = (y + m + d) * 153;
-    const part2 = (y * d) + (m * 42);
+    // Rumus Token: AF + TanggalBulanTahun + Angka Unik
+    const part1 = `${d}${m}${y}`; // Contoh: 190326
+    const part2 = (parseInt(d) * parseInt(m)) + parseInt(y); // Contoh: (19*3)+26 = 83
+    
     return `AF-${part1}-${part2}`;
 }
 
 client.once('ready', () => {
-    console.log(`✅ ${client.user.tag} Online!`);
+    console.log(`✅ Bot Berhasil Online sebagai: ${client.user.tag}`);
     
-    // Auto Reset Database saben jam 00:00 WIB
+    // Cek saben menit nggo reset database pas jam 00:00 WIB
     setInterval(() => {
-        const saiki = new Date().toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' });
-        if (saiki === "00:00") {
-            claimedUsers.clear();
-            console.log("⚠️ Database otomatis direset (Pergantian Hari).");
+        const jamSekarang = new Date().toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour12: false });
+        if (jamSekarang.startsWith("00:00")) {
+            databaseClaim.clear();
+            console.log("⚠️ Database claim otomatis direset (Sudah ganti hari).");
         }
     }, 60000);
 });
@@ -49,69 +48,69 @@ client.once('ready', () => {
 client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
 
-    // Perintah Setup Panel
+    // PERINTAH SETUP PANEL
     if (message.content === '!setup') {
-        const embed = new EmbedBuilder()
+        const embedPanel = new EmbedBuilder()
             .setColor('#39FF14') // Neon Green
-            .setTitle('🎣 TATANG COMMUNITY - TOKEN SYSTEM')
-            .setDescription('Klik tombol nang ngisor nggo njikot utawa ngecek token login.\n\n' +
-                '**ATURAN:**\n' +
-                '> 1️⃣ User mung bisa **Claim** sepisan sedina.\n' +
-                '> 2️⃣ Nek wis claim, gunakna tombol **Cek Token**.\n' +
-                '> 3️⃣ Token ganti otomatis saben jam 00:00 WIB.')
-            .setFooter({ text: 'AutoFish v3.0 • Developer Tatang' });
+            .setTitle('🎣 TATANG COMMUNITY - SISTEM TOKEN')
+            .setDescription('Silakan klik tombol di bawah untuk mendapatkan token login hari ini.\n\n' +
+                '**INFORMASI:**\n' +
+                '> 🔑 **Claim:** Cuma bisa sekali sehari.\n' +
+                '> 🔍 **Cek:** Gunakan jika kamu lupa tokenmu.\n' +
+                '> 🕒 **Reset:** Token berganti setiap jam 00:00 WIB.')
+            .setFooter({ text: 'AutoFish System • Developer Tatang' });
 
-        const row = new ActionRowBuilder()
+        const tombol = new ActionRowBuilder()
             .addComponents(
-                new ButtonBuilder().setCustomId('claim').setLabel('🎁 Claim Token').setStyle(ButtonStyle.Success).setEmoji('🔑'),
-                new ButtonBuilder().setCustomId('cek').setLabel('🔍 Cek Token').setStyle(ButtonStyle.Primary).setEmoji('👀')
+                new ButtonBuilder().setCustomId('tombol_claim').setLabel('🎁 Claim Token').setStyle(ButtonStyle.Success).setEmoji('🔑'),
+                new ButtonBuilder().setCustomId('tombol_cek').setLabel('🔍 Cek Token').setStyle(ButtonStyle.Primary).setEmoji('👀')
             );
 
-        await message.channel.send({ embeds: [embed], components: [row] });
+        await message.channel.send({ embeds: [embedPanel], components: [tombol] });
     }
 
-    // Perintah Admin: Reset Kabeh (!resetall)
-    if (message.content === '!resetall') {
-        if (!message.member.roles.cache.has(ADMIN_ROLE_ID)) return message.reply('❌ Ko udu admin, su!');
-        claimedUsers.clear();
-        message.reply('✅ Kabeh data claim wis di-reset!');
+    // PERINTAH KHUSUS ADMIN ROLE (ID: 1479064744714567680)
+    if (message.content === '!resetsemua') {
+        if (!message.member.roles.cache.has(ID_ROLE_ADMIN)) return message.reply('❌ Kamu bukan Admin, Su!');
+        databaseClaim.clear();
+        message.reply('✅ Seluruh database claim user telah di-reset secara paksa!');
     }
 });
 
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isButton()) return;
 
-    const userId = interaction.user.id;
-    const tokenToday = getDailyToken();
+    const idUser = interaction.user.id;
+    const tokenHariIni = generateTokenHarian();
 
     // LOGIKA TOMBOL CLAIM
-    if (interaction.customId === 'claim') {
-        if (claimedUsers.has(userId)) {
-            return interaction.reply({ content: '❌ Ko wis tau claim dina kiye! Klik tombol **Cek Token** bae.', ephemeral: true });
+    if (interaction.customId === 'tombol_claim') {
+        if (databaseClaim.has(idUser)) {
+            return interaction.reply({ content: '❌ Kamu sudah claim hari ini! Gunakan tombol **Cek Token** saja.', ephemeral: true });
         }
         
-        claimedUsers.set(userId, tokenToday);
-        const embed = new EmbedBuilder()
+        databaseClaim.set(idUser, tokenHariIni);
+        const embedClaim = new EmbedBuilder()
             .setColor('#39FF14')
-            .setTitle('🔑 TOKEN BERHASIL DICLAIM')
-            .setDescription(`Token-mu dina kiye:\n\`\`\`${tokenToday}\`\`\``)
-            .setFooter({ text: 'Simpen token kiye, aja nganti ilang!' });
-            
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+            .setTitle('🔑 TOKEN BERHASIL DI-CLAIM')
+            .setDescription(`Ini adalah token login kamu untuk hari ini:\n\n\`\`\`${tokenHariIni}\`\`\`\n*Token ini akan hangus besok jam 00:00 WIB.*`)
+            .setFooter({ text: 'Pastikan simpan token ini baik-baik!' });
+
+        await interaction.reply({ embeds: [embedClaim], ephemeral: true });
     }
 
     // LOGIKA TOMBOL CEK
-    if (interaction.customId === 'cek') {
-        if (!claimedUsers.has(userId)) {
-            return interaction.reply({ content: '❌ Ko urung claim token! Klik tombol **Claim Token** dhisit.', ephemeral: true });
+    if (interaction.customId === 'tombol_cek') {
+        if (!databaseClaim.has(idUser)) {
+            return interaction.reply({ content: '❌ Kamu belum claim token hari ini! Silakan klik **Claim Token** dulu.', ephemeral: true });
         }
 
-        const embed = new EmbedBuilder()
+        const embedCek = new EmbedBuilder()
             .setColor('#00BFFF')
-            .setTitle('🔍 TOKEN LOGIN-MU')
-            .setDescription(`Token-mu sing aktif:\n\`\`\`${tokenToday}\`\`\``);
-            
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+            .setTitle('🔍 CEK TOKEN KAMU')
+            .setDescription(`Token aktif kamu saat ini:\n\n\`\`\`${tokenHariIni}\`\`\``);
+
+        await interaction.reply({ embeds: [embedCek], ephemeral: true });
     }
 });
 
