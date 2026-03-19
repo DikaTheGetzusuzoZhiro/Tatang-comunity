@@ -1,6 +1,7 @@
 {
-  "name": "autofish-vvip",
-  "version": "3.0.0",
+  "name": "bot-token-tatang",
+  "version": "3.5.0",
+  "description": "Bot Token AutoFish Tatang Community",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
