@@ -78,4 +78,4 @@ client.on('interactionCreate', async interaction => {
 });
 
 // MASUKKAN TOKEN DISCORD BOT ANDA DI SINI
-client.login('TOKEN_BOT_DISCORD_ANDA_DISINI');
+client.login('MTQ4NDA3NDA5NDc2MzgzNTM5Mg.GmE0pC.5BOBzWFQNaQfZf5dMJCM56a5tV6TmiUgT-vYP0');
