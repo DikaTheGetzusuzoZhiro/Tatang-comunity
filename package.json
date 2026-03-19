@@ -1,7 +1,7 @@
 {
-  "name": "autofish-bot",
+  "name": "autofish-tatang",
   "version": "1.0.0",
-  "description": "Bot Token AutoFish",
+  "description": "Bot Discord for AutoFish Token System",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -10,6 +10,6 @@
     "discord.js": "^14.13.0"
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=18.0.0"
   }
 }
