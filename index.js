@@ -8,9 +8,8 @@ const client = new Client({
     ]
 });
 
-// Fungsi pembuat token harian (SINKRON DENGAN LUA)
+// Fungsi token harian (Wajib sama dengan Lua)
 function getDailyToken() {
-    // Menggunakan timezone WIB (Asia/Jakarta)
     const options = { timeZone: 'Asia/Jakarta', year: 'numeric', month: 'numeric', day: 'numeric' };
     const formatter = new Intl.DateTimeFormat('en-US', options);
     const parts = formatter.formatToParts(new Date());
@@ -22,60 +21,49 @@ function getDailyToken() {
         if (p.type === 'day') d = parseInt(p.value);
     });
 
-    // Rumus rahasia (harus persis dengan script Lua)
     const part1 = (y + m + d) * 153;
     const part2 = (y * d) + (m * 42);
-
     return `AF-${part1}-${part2}`;
 }
 
 client.once('ready', () => {
-    console.log(`✅ Bot Discord AutoFish sudah online sebagai ${client.user.tag}!`);
+    console.log(`✅ ${client.user.tag} Is Online!`);
 });
 
-// Perintah untuk memunculkan tombol Claim
 client.on('messageCreate', async (message) => {
-    if (message.author.bot) return;
-
-    if (message.content === '!setuptoken') {
+    if (message.content === '!setup') {
         const embed = new EmbedBuilder()
-            .setColor('#0099ff')
-            .setTitle('🎣 AutoFish Daily Token')
-            .setDescription('Token ini digunakan untuk masuk ke menu AutoFish di dalam game.\n\n⚠️ **Penting:**\n> Token akan berubah setiap hari pada jam 00:00 WIB.\n> Klik tombol di bawah untuk mendapatkan token rahasia hari ini.')
-            .setFooter({ text: 'Developer Tatang - AutoFish System' })
-            .setTimestamp();
+            .setColor('#2ecc71')
+            .setTitle('🎣 TATANG COMMUNITY - AUTOFISH')
+            .setDescription('Klik tombol nang ngisor kiye nggo njikot token login dina kiye.\n\n**INFO:**\n> 🕒 Token ganti saben jam 00:00 WIB.\n> 🔑 Token mung bisa dinggo 24 jam.')
+            .setThumbnail(client.user.displayAvatarURL())
+            .setFooter({ text: 'AutoFish System • Developer Tatang', iconURL: client.user.displayAvatarURL() });
 
         const row = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId('claim_token')
-                    .setLabel('🎁 Claim Token Hari Ini')
-                    .setStyle(ButtonStyle.Success)
+                    .setLabel('Claim Token')
+                    .setStyle(ButtonStyle.Primary)
                     .setEmoji('🔑')
             );
 
         await message.channel.send({ embeds: [embed], components: [row] });
-        message.delete().catch(() => {}); // Hapus pesan '!setuptoken'
     }
 });
 
-// Respon saat tombol diclaim
 client.on('interactionCreate', async interaction => {
     if (!interaction.isButton()) return;
-
     if (interaction.customId === 'claim_token') {
         const tokenToday = getDailyToken();
+        const response = new EmbedBuilder()
+            .setColor('#f1c40f')
+            .setTitle('✨ TOKEN KAMU HARI INI')
+            .setDescription(`Monggo dicopy token-ne:\n\n\`\`\`${tokenToday}\`\`\`\n*Paste-na nang menu login script AutoFish.*`)
+            .setTimestamp();
 
-        const replyEmbed = new EmbedBuilder()
-            .setColor('#2ecc71')
-            .setTitle('✅ Token Berhasil Diklaim!')
-            .setDescription(`Halo <@${interaction.user.id}>, ini token kamu untuk hari ini:\n\n\`\`\`${tokenToday}\`\`\`\n*Silakan copy dan paste ke dalam menu AutoFish di dalam game.*`)
-            .setFooter({ text: 'Token ini kadaluarsa pukul 23:59 WIB nanti.' });
-
-        // ephemeral: true berarti HANYA user yang klik yang bisa lihat pesannya
-        await interaction.reply({ embeds: [replyEmbed], ephemeral: true });
+        await interaction.reply({ embeds: [response], ephemeral: true });
     }
 });
 
-// MASUKKAN TOKEN DISCORD BOT ANDA DI SINI
-client.login('MTQ4NDA3NDA5NDc2MzgzNTM5Mg.GmE0pC.5BOBzWFQNaQfZf5dMJCM56a5tV6TmiUgT-vYP0');
+client.login(process.env.DISCORD_TOKEN);
