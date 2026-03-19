@@ -8,8 +8,9 @@ const client = new Client({
     ]
 });
 
-// Fungsi token harian (Wajib sama dengan Lua)
+// Fungsi Token Harian (Sinkron karo Lua)
 function getDailyToken() {
+    // Lock nang Zona Waktu WIB (Asia/Jakarta) ben ora melu jam server luar negeri
     const options = { timeZone: 'Asia/Jakarta', year: 'numeric', month: 'numeric', day: 'numeric' };
     const formatter = new Intl.DateTimeFormat('en-US', options);
     const parts = formatter.formatToParts(new Date());
@@ -21,30 +22,42 @@ function getDailyToken() {
         if (p.type === 'day') d = parseInt(p.value);
     });
 
+    // Rumus Rahasia (Wajib padha karo Script Lua)
     const part1 = (y + m + d) * 153;
     const part2 = (y * d) + (m * 42);
+
     return `AF-${part1}-${part2}`;
 }
 
 client.once('ready', () => {
-    console.log(`✅ ${client.user.tag} Is Online!`);
+    console.log(`✅ ${client.user.tag} Online & Ready!`);
 });
 
 client.on('messageCreate', async (message) => {
+    if (message.author.bot) return;
+
+    // Perintah nggo ngetokna tombol claim
     if (message.content === '!setup') {
         const embed = new EmbedBuilder()
-            .setColor('#2ecc71')
+            .setColor('#00FF00')
             .setTitle('🎣 TATANG COMMUNITY - AUTOFISH')
-            .setDescription('Klik tombol nang ngisor kiye nggo njikot token login dina kiye.\n\n**INFO:**\n> 🕒 Token ganti saben jam 00:00 WIB.\n> 🔑 Token mung bisa dinggo 24 jam.')
             .setThumbnail(client.user.displayAvatarURL())
-            .setFooter({ text: 'AutoFish System • Developer Tatang', iconURL: client.user.displayAvatarURL() });
+            .setDescription(
+                'Sugeng rawuh! Klik tombol nang ngisor kiye nggo njikot token login dina kiye.\n\n' +
+                '**SYARAT & KETENTUAN:**\n' +
+                '> 🔑 **Token** bakal ganti otomatis saben jam 00:00 WIB.\n' +
+                '> 🕒 **Durasi:** Token mung berlaku 24 jam.\n' +
+                '> 📺 **Tutorial:** Cek YouTube `@tatanglua`'
+            )
+            .setFooter({ text: 'AutoFish System v2.0 • Developer Tatang' })
+            .setTimestamp();
 
         const row = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId('claim_token')
-                    .setLabel('Claim Token')
-                    .setStyle(ButtonStyle.Primary)
+                    .setLabel('🎁 Claim Token Hari Ini')
+                    .setStyle(ButtonStyle.Success)
                     .setEmoji('🔑')
             );
 
@@ -52,18 +65,25 @@ client.on('messageCreate', async (message) => {
     }
 });
 
-client.on('interactionCreate', async interaction => {
+client.on('interactionCreate', async (interaction) => {
     if (!interaction.isButton()) return;
+
     if (interaction.customId === 'claim_token') {
         const tokenToday = getDailyToken();
-        const response = new EmbedBuilder()
-            .setColor('#f1c40f')
-            .setTitle('✨ TOKEN KAMU HARI INI')
-            .setDescription(`Monggo dicopy token-ne:\n\n\`\`\`${tokenToday}\`\`\`\n*Paste-na nang menu login script AutoFish.*`)
-            .setTimestamp();
 
-        await interaction.reply({ embeds: [response], ephemeral: true });
+        const successEmbed = new EmbedBuilder()
+            .setColor('#F1C40F')
+            .setTitle('✨ TOKEN BERHASIL DI-CLAIM!')
+            .setDescription(
+                `Halo **${interaction.user.username}**, kiye token login-mu:\n\n` +
+                `\`\`\`${tokenToday}\`\`\`\n` +
+                '*Copy token nang ndhuwur terus paste nang script game-mu.*'
+            )
+            .setFooter({ text: 'Aja lali mampir YouTube Tatang Lua!' });
+
+        await interaction.reply({ embeds: [successEmbed], ephemeral: true });
     }
 });
 
+// Railway Variables (Aja diganti manual!)
 client.login(process.env.DISCORD_TOKEN);
