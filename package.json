@@ -1,7 +1,6 @@
 {
-  "name": "autofish-tatang",
-  "version": "1.0.0",
-  "description": "Bot Discord for AutoFish Token System",
+  "name": "autofish-vvip",
+  "version": "3.0.0",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
