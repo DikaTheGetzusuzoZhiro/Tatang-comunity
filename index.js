@@ -5,8 +5,8 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 // ================= KONFIGURASI =================
-const TOKEN_DISCORD = 'TOKEN_BOT_DISCORD_KAMU_DISINI'; 
-const ADMIN_ROLE_ID = 'ID_ROLE_ADMIN_KAMU'; // Role yang bisa reset token
+const TOKEN_DISCORD = 'MTQ4NDA3NDA5NDc2MzgzNTM5Mg.GMhdXE.scuO9YccbDKidbWWh3OGzlbSv3kHX4siyImkwI'; 
+const ADMIN_ROLE_ID = '1466470849266848009'; // Role yang bisa reset token
 const PORT = 3000;
 
 const client = new Client({
