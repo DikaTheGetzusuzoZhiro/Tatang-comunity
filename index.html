@@ -3,81 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tatang Repo | Jasa Verifikasi Roblox</title>
+    <title>Tatang Repo | Roblox Services</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0f172a; color: white; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .card-glow:hover { border-color: #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); transition: 0.3s; }
+        /* Gaya Khusus */
+        body { 
+            background-color: #050509; 
+            color: #e2e8f0; 
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        
+        .glass-card { 
+            background: rgba(15, 23, 42, 0.6); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.06); 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .roblox-glow {
+            filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.5));
+        }
+
+        .btn-glow {
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
 
-    <div class="max-w-4xl mx-auto px-6 py-16 text-center">
-        <div class="inline-block px-4 py-1 mb-6 rounded-full glass text-xs font-mono text-blue-400">
-            SYSTEM STATUS: ONLINE
-        </div>
-        <h1 class="text-6xl font-black mb-4 gradient-text tracking-tighter italic">TATANG REPO</h1>
-        <p class="text-gray-400 text-lg mb-8 max-w-lg mx-auto leading-relaxed">Penyedia Jasa Verifikasi Mic, Ubah Umur, dan Ganti Negara Roblox Tercepat & Termurah.</p>
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
         
-        <div class="flex justify-center gap-4 mb-12">
-            <a href="https://discord.gg/DXfdeX2m8d" target="_blank" class="glass p-4 rounded-2xl hover:scale-110 transition-transform text-indigo-400 border border-indigo-500/30">
-                <i class="fab fa-discord text-2xl"></i>
-            </a>
-            <a href="https://wa.me/62895328044863" target="_blank" class="glass p-4 rounded-2xl hover:scale-110 transition-transform text-green-400 border border-green-500/30">
-                <i class="fab fa-whatsapp text-2xl"></i>
-            </a>
-            <a href="#" class="glass p-4 rounded-2xl hover:scale-110 transition-transform text-pink-400 border border-pink-500/30">
-                <i class="fab fa-tiktok text-2xl"></i>
-            </a>
-            <a href="#" class="glass p-4 rounded-2xl hover:scale-110 transition-transform text-white border border-gray-500/30">
-                <i class="fab fa-github text-2xl"></i>
-            </a>
-        </div>
-
-        <div class="glass max-w-sm mx-auto rounded-[2.5rem] p-10 border-t-8 border-blue-500 shadow-2xl relative overflow-hidden card-glow">
-            <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div class="glass-card w-full max-w-lg rounded-[2.5rem] p-10 md:p-12 text-center relative overflow-hidden">
             
-            <h2 class="text-2xl font-bold mb-1 tracking-tight">Full Verifikasi</h2>
-            <p class="text-blue-400 text-xs font-mono mb-6 uppercase tracking-widest">Premium Service</p>
-            
-            <div class="text-5xl font-black my-6 text-white tracking-tighter">Rp 30k</div>
-            
-            <ul class="text-left space-y-4 mb-10 text-gray-300 text-sm">
-                <li class="flex items-center"><i class="fas fa-microphone text-blue-500 mr-3"></i> On Mic (Voice Chat)</li>
-                <li class="flex items-center"><i class="fas fa-calendar-alt text-blue-500 mr-3"></i> Ubah Umur (ID Verification)</li>
-                <li class="flex items-center"><i class="fas fa-globe-asia text-blue-500 mr-3"></i> Ganti Negara Akun</li>
-                <li class="flex items-center"><i class="fas fa-shield-alt text-blue-500 mr-3"></i> 100% Aman & Bergaransi</li>
-            </ul>
+            <div class="absolute -top-16 -left-16 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-16 -right-16 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl"></div>
 
-            <a href="https://wa.me/62895328044863?text=Halo+Bang+Tatang,+saya+mau+order+jasa+verifikasi+Roblox" class="block bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-900/40 transform active:scale-95">
-                ORDER VIA WHATSAPP
-            </a>
-        </div>
-    </div>
-
-    <div class="max-w-4xl mx-auto px-6 pb-20">
-        <div class="grid md:grid-cols-2 gap-6">
-            <div class="glass p-8 rounded-3xl border border-white/5">
-                <h3 class="font-bold mb-3 text-blue-400 flex items-center">
-                    <i class="fas fa-info-circle mr-2"></i> Kenapa Pilih Kami?
-                </h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Proses dilakukan secara manual dan profesional menggunakan metode verifikasi identitas terbaru yang kompatibel dengan sistem Roblox Global.</p>
+            <div class="relative z-10 flex flex-col items-center mb-10">
+                <img src="https://static.wikia.nocookie.net/logopedia/images/d/d4/Roblox_2018_O_Icon_final_-_White.svg" alt="Roblox Logo" class="w-16 h-16 mb-6 roblox-glow">
+                
+                <h1 class="text-5xl font-extrabold tracking-tighter mb-2gradient-text">TATANG REPO</h1>
+                <p class="text-blue-300 text-sm font-mono tracking-widest uppercase mb-1">Roblox Service Specialist</p>
+                <div class="w-20 h-1 bg-blue-500 rounded-full mt-4"></div>
             </div>
-            <div class="glass p-8 rounded-3xl border border-white/5">
-                <h3 class="font-bold mb-3 text-blue-400 flex items-center">
-                    <i class="fas fa-lock mr-2"></i> Jaminan Keamanan
-                </h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Kami menjamin kerahasiaan data akun Anda. Setelah proses verifikasi selesai, semua data login akan langsung kami hapus dari sistem kami.</p>
-            </div>
-        </div>
-    </div>
 
-    <footer class="text-center py-12 border-t border-gray-800/50">
-        <p class="text-gray-600 text-[10px] tracking-[0.2em] uppercase font-bold">Powered by Tatang Dev &copy; 2026</p>
-    </footer>
+            <div class="glass-card rounded-2xl p-6 mb-10 border border-white/5 text-left relative z-10">
+                <h2 class="text-lg font-bold mb-5 text-white flex items-center">
+                    <i class="fas fa-server mr-3 text-blue-400"></i> Fitur Jasa (All-in-One)
+                </h2>
+                <ul class="space-y-4 text-gray-300 text-sm">
+                    <li class="flex items-center bg-white/5 p-3 rounded-xl">
+                        <i class="fas fa-microphone-alt text-xl text-blue-400 w-8 text-center mr-3"></i>
+                        Verifikasi On Mic <span class="text-gray-500 ml-1">(Voice Chat)</span>
+                    </li>
+                    <li class="flex items-center bg-white/5 p-3 rounded-xl">
+                        <i class="fas fa-id-card text-xl text-blue-400 w-8 text-center mr-3"></i>
+                        Ubah Umur <span class="text-gray-500 ml-1">(ID Verification)</span>
+                    </li>
+                    <li class="flex items-center bg-white/5 p-3 rounded-xl">
+                        <i class="fas fa-globe text-xl text-blue-400 w-8 text-center mr-3"></i>
+                        Ganti Negara Akun
+                    </li>
+                    <li class="flex items-center bg-blue-950/50 p-3 rounded-xl border border-blue-500/20">
+                        <i class="fas fa-tags text-xl text-green-400 w-8 text-center mr-3"></i>
+                        <span class="font-bold text-white text-base">Harga: Rp 30k</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="space-y-4 relative z-10">
+                <a href="https://www.tiktok.com/@fyychiee" target="_blank" class="flex items-center justify-between bg-[#010101] border border-white/10 text-white p-5 rounded-2xlbtn-glow hover:border-pink-500/50">
+                    <div class="flex items-center">
+                        <i class="fab fa-tiktok text-2xl mr-4 text-pink-400"></i>
+                        <span class="font-semibold text-lg">TikTok fyychiee</span>
+                    </div>
+                    <i class="fas fa-external-link-alt text-gray-600 text-sm"></i>
+                </a>
+
+                <a href="https://wa.me/62895328044863?text=Halo+Tatang+Repo,+saya+ingin+order+jasa+verifikasi+Roblox" target="_blank" class="flex items-center justify-between bg-[#075E54]/20 border border-green-500/20 text-white p-5 rounded-2xlbtn-glow hover:bg-[#075E54]/40">
+                    <div class="flex items-center">
+                        <i class="fab fa-whatsapp text-2xl mr-4 text-green-400"></i>
+                        <span class="font-semibold text-lg">WhatsApp Order</span>
+                    </div>
+                    <i class="fas fa-comments text-gray-500 text-sm"></i>
+                </a>
+
+                <a href="https://discord.gg/DXfdeX2m8d" target="_blank" class="flex items-center justify-between bg-[#5865F2]/20 border border-indigo-500/20 text-white p-5 rounded-2xlbtn-glow hover:bg-[#5865F2]/40">
+                    <div class="flex items-center">
+                        <i class="fab fa-discord text-2xl mr-4 text-indigo-400"></i>
+                        <span class="font-semibold text-lg">Discord Server</span>
+                    </div>
+                    <i class="fas fa-user-plus text-gray-500 text-sm"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <footer class="mt-12 text-center text-gray-600 text-xs font-mono tracking-widest uppercase">
+            &copy; 2026 TATANG REPO. PROPERTY OF ROBLOX CORP.
+        </footer>
+
+    </div>
 
 </body>
-</html>
+                    </html>
