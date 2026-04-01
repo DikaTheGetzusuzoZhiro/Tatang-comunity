@@ -3,22 +3,43 @@ import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/f
 
 window.login = login;
 
+let allData = [];
+
 async function loadFiles() {
   const querySnapshot = await getDocs(collection(db, "files"));
   const container = document.getElementById("fileList");
 
+  allData = [];
+
   querySnapshot.forEach((doc) => {
-    const data = doc.data();
+    allData.push(doc.data());
+  });
+
+  render(allData);
+}
+
+function render(data) {
+  const container = document.getElementById("fileList");
+  container.innerHTML = "";
+
+  data.forEach(item => {
     container.innerHTML += `
       <div class="card">
-        <h3>${data.title}</h3>
-        <p>${data.desc}</p>
-        <a href="${data.url}" target="_blank">
+        <span class="badge">${item.category || "MOD"}</span>
+        <h3>${item.title}</h3>
+        <p>${item.desc}</p>
+        <a href="${item.url}" target="_blank">
           <button>Download</button>
         </a>
       </div>
     `;
   });
 }
+
+document.getElementById("search").addEventListener("input", (e) => {
+  const keyword = e.target.value.toLowerCase();
+  const filtered = allData.filter(x => x.title.toLowerCase().includes(keyword));
+  render(filtered);
+});
 
 loadFiles();
