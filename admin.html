@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Panel</title>
+  <title>Admin</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Admin Panel</h2>
 
-  <input type="text" id="title" placeholder="Judul">
-  <input type="text" id="desc" placeholder="Deskripsi">
-  <input type="file" id="file">
-  <button onclick="uploadFile()">Upload</button>
+<h2>Admin Upload</h2>
 
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="admin.js"></script>
+<input type="text" id="title" placeholder="Judul">
+<input type="text" id="desc" placeholder="Deskripsi">
+<input type="text" id="category" placeholder="Kategori (CLEO, Skin, dll)">
+<input type="text" id="url" placeholder="Link File">
+
+<button onclick="uploadFile()">Upload</button>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="admin.js"></script>
+
 </body>
 </html>
