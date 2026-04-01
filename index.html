@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>DikaFiles</title>
+  <title>DikaForge</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="navbar">
-    <h2>DikaFiles</h2>
-    <button onclick="login()">Login Google</button>
-  </div>
 
-  <div id="fileList" class="container"></div>
+<header>
+  <h1><span>Dika</span>Forge</h1>
+  <button onclick="login()">Login</button>
+</header>
 
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="script.js"></script>
+<section class="hero">
+  <h2>GUDANG <span>MOD</span></h2>
+  <p>Script Lua, modpack, dan tools GTA SA</p>
+</section>
+
+<div class="search-box">
+  <input type="text" id="search" placeholder="Cari mod...">
+</div>
+
+<div id="fileList" class="grid"></div>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="script.js"></script>
+
 </body>
 </html>
