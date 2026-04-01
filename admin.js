@@ -5,7 +5,7 @@ const ADMIN_EMAIL = "dikasalto5@gmail.com";
 
 auth.onAuthStateChanged((user) => {
   if (!user || user.email !== ADMIN_EMAIL) {
-    alert("Bukan admin!");
+    alert("Akses ditolak!");
     window.location.href = "/";
   }
 });
@@ -13,12 +13,15 @@ auth.onAuthStateChanged((user) => {
 window.uploadFile = async function () {
   const title = document.getElementById("title").value;
   const desc = document.getElementById("desc").value;
+  const category = document.getElementById("category").value;
+  const url = document.getElementById("url").value;
 
   await addDoc(collection(db, "files"), {
     title,
     desc,
-    url: "LINK_FILE_KAMU"
+    category,
+    url
   });
 
-  alert("Uploaded!");
+  alert("Berhasil upload!");
 };
