@@ -9,10 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* Base & Font */
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #07030c; /* Very dark purple/black */
+            background-color: #07030c;
             color: #e2e8f0; 
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(168, 85, 247, 0.08), transparent 25%),
@@ -21,7 +20,6 @@
             overflow-x: hidden;
         }
         
-        /* Glassmorphism Panel - Purple Tint */
         .glass-panel { 
             background: linear-gradient(145deg, rgba(20, 10, 35, 0.6) 0%, rgba(15, 5, 25, 0.4) 100%);
             backdrop-filter: blur(20px); 
@@ -30,14 +28,12 @@
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(192, 132, 252, 0.1);
         }
 
-        /* Inner Card */
         .inner-glass {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(192, 132, 252, 0.08);
             box-shadow: inset 0 0 20px rgba(192, 132, 252, 0.02);
         }
         
-        /* Floating Animation */
         .floating {
             animation: floating 3s ease-in-out infinite;
         }
@@ -48,14 +44,12 @@
             100% { transform: translateY(0px); }
         }
 
-        /* Animated Text Gradient */
         .text-animated-gradient {
             background: linear-gradient(270deg, #c084fc, #e879f9, #f472b6, #c084fc);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: gradientMove 3s ease infinite;
-            filter: drop-shadow(0 0 10px rgba(217, 70, 239, 0.3));
         }
 
         @keyframes gradientMove {
@@ -64,144 +58,94 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Button Hover Effects */
         .social-btn {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .social-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 0;
+            transition: all 0.4s ease;
         }
 
-        .social-btn > * {
-            position: relative;
-            z-index: 1;
+        .btn-tiktok:hover { 
+            border-color: #ff0050; 
+            box-shadow: 0 0 20px rgba(255, 0, 80, 0.2); 
+            transform: translateY(-3px); 
         }
 
-        /* Keep brand colors for recognition, but enhance the glow */
-        .btn-tiktok:hover { border-color: #ff0050; box-shadow: 0 0 20px rgba(255, 0, 80, 0.2); transform: translateY(-3px); }
-        .btn-tiktok:hover::before { background: linear-gradient(90deg, rgba(255,0,80,0.1), rgba(0,242,254,0.1)); opacity: 1; }
-        
-        .btn-whatsapp:hover { border-color: #25D366; box-shadow: 0 0 20px rgba(37, 211, 102, 0.2); transform: translateY(-3px); }
-        .btn-whatsapp:hover::before { background: rgba(37, 211, 102, 0.1); opacity: 1; }
-        
-        .btn-discord:hover { border-color: #5865F2; box-shadow: 0 0 20px rgba(88, 101, 242, 0.2); transform: translateY(-3px); }
-        .btn-discord:hover::before { background: rgba(88, 101, 242, 0.1); opacity: 1; }
-
-        /* Feature Icons - Purple Theme */
         .feature-icon-wrapper {
             background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(217, 70, 239, 0.05));
             border: 1px solid rgba(168, 85, 247, 0.2);
         }
     </style>
 </head>
-<body class="antialiased selection:bg-purple-500/30 selection:text-white">
+<body class="antialiased">
 
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-[120px]"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-fuchsia-600/20 rounded-full blur-[120px]"></div>
     </div>
 
-    <div class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
         
-        <div class="glass-panel w-full max-w-[420px] rounded-[2rem] p-8 md:p-10 text-center relative z-10">
+        <div class="glass-panel w-full max-w-[420px] rounded-[2rem] p-8 text-center">
             
             <div class="flex flex-col items-center mb-8">
                 <div class="relative mb-6 floating">
-                    <div class="absolute inset-0 bg-purple-500/40 blur-xl rounded-full"></div>
-                    <img src="https://static.wikia.nocookie.net/logopedia/images/d/d4/Roblox_2018_O_Icon_final_-_White.svg" alt="Roblox Logo" class="w-16 h-16 relative z-10 filter drop-shadow-[0_0_15px_rgba(255,255,255,0.7)]">
+                    <img src="https://static.wikia.nocookie.net/logopedia/images/d/d4/Roblox_2018_O_Icon_final_-_White.svg" class="w-16 h-16">
                 </div>
                 
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 text-animated-gradient floating">
+                <h1 class="text-4xl font-extrabold mb-2 text-animated-gradient">
                     FYY STORE
                 </h1>
-                <p class="text-purple-300/80 text-xs font-semibold tracking-[0.2em] uppercase mb-4">
+                <p class="text-purple-300 text-xs uppercase mb-4">
                     Premium Roblox Service
                 </p>
                 <div class="w-12 h-1 bg-gradient-to-r from-purple-500 to-fuchsia-400 rounded-full"></div>
             </div>
 
-            <div class="inner-glass rounded-2xl p-6 mb-8 text-left transition-transform hover:scale-[1.02] duration-300">
-                <h2 class="text-base font-bold mb-4 text-white flex items-center">
-                    <i class="fas fa-bolt text-yellow-400 mr-2 drop-shadow-[0_0_5px_rgba(250,204,21,0.5)]"></i> All-in-One Services
+            <div class="inner-glass rounded-2xl p-6 mb-8 text-left">
+                <h2 class="text-base font-bold mb-4 text-white">
+                    ⚡ All-in-One Services
                 </h2>
                 
-                <ul class="space-y-3 text-gray-300 text-[13px] font-medium">
+                <ul class="space-y-3 text-gray-300 text-sm">
                     <li class="flex items-center">
-                        <div class="feature-icon-wrapper w-8 h-8 rounded-lg flex items-center justify-center mr-3 shrink-0">
-                            <i class="fas fa-microphone-alt text-purple-400 text-sm"></i>
+                        <div class="feature-icon-wrapper w-8 h-8 rounded-lg flex items-center justify-center mr-3">
+                            🎤
                         </div>
-                        <span>Verifikasi On Mic <span class="text-gray-500 font-normal">(Voice Chat)</span></span>
+                        Verifikasi On Mic
                     </li>
                     <li class="flex items-center">
-                        <div class="feature-icon-wrapper w-8 h-8 rounded-lg flex items-center justify-center mr-3 shrink-0">
-                            <i class="fas fa-id-card text-purple-400 text-sm"></i>
+                        <div class="feature-icon-wrapper w-8 h-8 rounded-lg flex items-center justify-center mr-3">
+                            🪪
                         </div>
-                        <span>Ubah Umur <span class="text-gray-500 font-normal">(ID Verification)</span></span>
+                        Ubah Umur
                     </li>
                     <li class="flex items-center">
-                        <div class="feature-icon-wrapper w-8 h-8 rounded-lg flex items-center justify-center mr-3 shrink-0">
-                            <i class="fas fa-globe text-purple-400 text-sm"></i>
+                        <div class="feature-icon-wrapper w-8 h-8 rounded-lg flex items-center justify-center mr-3">
+                            🌍
                         </div>
-                        <span>Ganti Negara Akun</span>
+                        Ganti Negara
                     </li>
                 </ul>
 
-                <div class="mt-5 pt-4 border-t border-purple-500/20 flex justify-between items-center">
-                    <span class="text-gray-400 text-sm">Total Harga</span>
-                    <span class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-purple-400 filter drop-shadow-[0_0_8px_rgba(217,70,239,0.3)]">
+                <div class="mt-5 pt-4 border-t border-purple-500/20 flex justify-between">
+                    <span>Total Harga</span>
+                    <span class="font-bold text-purple-400">
                         Rp 30.000
                     </span>
                 </div>
             </div>
 
-            <div class="space-y-3 relative z-10 font-semibold">
-                
-                <a href="https://www.tiktok.com/@fyychiee" target="_blank" class="social-btn btn-tiktok flex items-center justify-between bg-black/40 border border-purple-500/20 text-white p-4 rounded-xl">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mr-4">
-                            <i class="fab fa-tiktok text-xl text-white drop-shadow-[0_0_5px_rgba(255,0,80,0.8)]"></i>
-                        </div>
-                        <span class="text-md tracking-wide">@fyychiee</span>
-                    </div>
-                    <i class="fas fa-chevron-right text-purple-400/50 text-xs"></i>
-                </a>
-
-                <a href="https://wa.me/62895328044863?text=Halo+Fyy+Store,+saya+ingin+order+jasa+verifikasi+Roblox" target="_blank" class="social-btn btn-whatsapp flex items-center justify-between bg-black/40 border border-purple-500/20 text-white p-4 rounded-xl">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center mr-4">
-                            <i class="fab fa-whatsapp text-xl text-green-400 drop-shadow-[0_0_5px_rgba(37,211,102,0.8)]"></i>
-                        </div>
-                        <span class="text-md tracking-wide">Order via WhatsApp</span>
-                    </div>
-                    <i class="fas fa-chevron-right text-purple-400/50 text-xs"></i>
-                </a>
-
-                <a href="https://discord.gg/DXfdeX2m8d" target="_blank" class="social-btn btn-discord flex items-center justify-between bg-black/40 border border-purple-500/20 text-white p-4 rounded-xl">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center mr-4">
-                            <i class="fab fa-discord text-xl text-indigo-400 drop-shadow-[0_0_5px_rgba(88,101,242,0.8)]"></i>
-                        </div>
-                        <span class="text-md tracking-wide">Join Discord Server</span>
-                    </div>
-                    <i class="fas fa-chevron-right text-purple-400/50 text-xs"></i>
-                </a>
-            </div>
+            <!-- ONLY TIKTOK LEFT -->
+            <a href="https://www.tiktok.com/@fyychiee" target="_blank" class="social-btn btn-tiktok flex items-center justify-between bg-black/40 border border-purple-500/20 text-white p-4 rounded-xl">
+                <div class="flex items-center">
+                    <i class="fab fa-tiktok text-xl mr-4"></i>
+                    <span>@fyychiee</span>
+                </div>
+                <i class="fas fa-chevron-right text-xs"></i>
+            </a>
 
         </div>
 
-        <footer class="mt-8 text-center">
-            <p class="text-purple-300/40 text-[10px] font-bold tracking-[0.15em] uppercase">
-                &copy; 2026 FYY STORE.<br>
-                <span class="font-normal tracking-wider mt-1 block opacity-70">Not affiliated with Roblox Corp.</span>
-            </p>
+        <footer class="mt-8 text-center text-xs text-purple-300/40">
+            &copy; 2026 FYY STORE
         </footer>
 
     </div>
