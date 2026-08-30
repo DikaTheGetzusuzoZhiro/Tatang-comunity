@@ -1,0 +1,3 @@
+window.addEventListener("load",()=>{setTimeout(()=>{const l=document.getElementById("loader");l.style.opacity="0";l.style.pointerEvents="none";setTimeout(()=>l.remove(),700)},1800)});
+document.querySelector(".menu")?.addEventListener("click",()=>{const nav=document.querySelector(".nav nav");nav.style.display=nav.style.display==="flex"?"none":"flex";nav.style.position="absolute";nav.style.top="76px";nav.style.left="0";nav.style.right="0";nav.style.padding="20px";nav.style.background="#10001d";nav.style.flexDirection="column";nav.style.textAlign="center"});
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{const el=document.querySelector(a.getAttribute("href"));if(el){e.preventDefault();el.scrollIntoView({behavior:"smooth"})}}));
