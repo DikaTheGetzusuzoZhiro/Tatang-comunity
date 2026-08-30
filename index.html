@@ -1,115 +1,806 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="theme-color" content="#16002f">
-  <title>TamaBlox — Jasa Aktifkan On Mic Roblox</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TamaBlox · VoiceChat Roblox</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ── Reset & base ── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple-900: #1a0b2e;
+            --purple-800: #2d1b4e;
+            --purple-700: #4a2a7a;
+            --purple-600: #6b3fa0;
+            --purple-500: #8b5fc8;
+            --purple-400: #b288e6;
+            --purple-300: #d4b8f5;
+            --purple-200: #e8d9fc;
+            --purple-100: #f4edff;
+            --neon-glow: #a855f7;
+            --gold: #fbbf24;
+            --white: #ffffff;
+            --shadow: 0 20px 60px rgba(106, 13, 173, 0.4);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--purple-900);
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── Loading Screen ── */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--purple-900);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: var(--neon-glow);
+            border-right-color: var(--purple-400);
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+
+        .loader-ring::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-bottom-color: var(--gold);
+            border-left-color: var(--purple-300);
+            animation: spin 0.6s linear infinite reverse;
+        }
+
+        .loader-text {
+            margin-top: 32px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--purple-300), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse-text 1.4s ease-in-out infinite;
+        }
+
+        .loader-sub {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--purple-400);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .loader-progress {
+            margin-top: 28px;
+            width: 200px;
+            height: 3px;
+            background: var(--purple-800);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loader-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--neon-glow), var(--gold));
+            border-radius: 10px;
+            animation: progress 2.2s ease-in-out forwards;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse-text {
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.04);
+            }
+        }
+
+        @keyframes progress {
+            0% {
+                width: 0%;
+            }
+            30% {
+                width: 35%;
+            }
+            60% {
+                width: 70%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        /* ── Main Content ── */
+        .main-content {
+            opacity: 0;
+            animation: fadeUp 0.9s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Header / Nav ── */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 40px;
+            background: rgba(26, 11, 46, 0.75);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(139, 95, 200, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--purple-300), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-brand span {
+            font-size: 2rem;
+            -webkit-text-fill-color: var(--gold);
+        }
+
+        .nav-badge {
+            background: var(--purple-600);
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 60px 24px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(106, 13, 173, 0.25) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(139, 95, 200, 0.18);
+            border: 1px solid rgba(139, 95, 200, 0.3);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--purple-300);
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-dot 1.4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(0.6);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 8vw, 4.6rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--neon-glow), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .hero h1 .highlight-gold {
+            background: linear-gradient(135deg, var(--gold), #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--purple-300);
+            max-width: 640px;
+            margin: 12px auto 28px;
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .hero .subtitle strong {
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        /* ── Price Card ── */
+        .price-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: linear-gradient(145deg, var(--purple-800), var(--purple-900));
+            border: 1px solid rgba(139, 95, 200, 0.3);
+            padding: 16px 36px;
+            border-radius: 60px;
+            box-shadow: var(--shadow);
+            margin: 8px 0 16px;
+            backdrop-filter: blur(8px);
+        }
+
+        .price-card .price {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .price-card .label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--purple-300);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .price-card .label small {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: var(--purple-400);
+            letter-spacing: 0.5px;
+        }
+
+        /* ── CTA Button ── */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--neon-glow), #7c3aed);
+            color: var(--white);
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 18px 44px;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
+            margin-top: 12px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 48px rgba(139, 92, 246, 0.6);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary .icon {
+            font-size: 1.4rem;
+        }
+
+        /* ── Service Cards ── */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            max-width: 900px;
+            margin: 40px auto 20px;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        .service-card {
+            background: rgba(45, 27, 78, 0.6);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(139, 95, 200, 0.2);
+            border-radius: 24px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: transform 0.25s ease, border-color 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--purple-500);
+        }
+
+        .service-card .emoji {
+            font-size: 2.6rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .service-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .service-card p {
+            font-size: 0.85rem;
+            color: var(--purple-300);
+            font-weight: 400;
+        }
+
+        .service-card .tag {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(251, 191, 36, 0.15);
+            color: var(--gold);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        /* ── Age Request Section ── */
+        .age-section {
+            max-width: 700px;
+            margin: 40px auto 20px;
+            padding: 32px 28px;
+            background: linear-gradient(145deg, rgba(45, 27, 78, 0.5), rgba(26, 11, 46, 0.7));
+            border-radius: 32px;
+            border: 1px solid rgba(139, 95, 200, 0.15);
+            text-align: center;
+            backdrop-filter: blur(6px);
+        }
+
+        .age-section h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .age-section h2 .highlight {
+            background: linear-gradient(135deg, var(--purple-300), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .age-section .sub {
+            color: var(--purple-300);
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+
+        .age-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .age-tag {
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            background: rgba(139, 95, 200, 0.15);
+            border: 1px solid rgba(139, 95, 200, 0.2);
+            color: var(--white);
+            transition: all 0.2s ease;
+        }
+
+        .age-tag:hover {
+            background: rgba(139, 95, 200, 0.3);
+            border-color: var(--purple-400);
+            transform: scale(1.04);
+        }
+
+        .age-tag .badge {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 0.7rem;
+            background: var(--purple-600);
+            padding: 1px 10px;
+            border-radius: 30px;
+            color: var(--white);
+        }
+
+        .age-tag .badge.gold {
+            background: rgba(251, 191, 36, 0.25);
+            color: var(--gold);
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 40px 24px 28px;
+            border-top: 1px solid rgba(139, 95, 200, 0.1);
+            margin-top: 40px;
+            color: var(--purple-400);
+            font-size: 0.85rem;
+        }
+
+        footer .brand-foot {
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple-300), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        footer .blox {
+            color: var(--gold);
+            -webkit-text-fill-color: var(--gold);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            nav {
+                padding: 14px 20px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .nav-brand {
+                font-size: 1.4rem;
+            }
+
+            .nav-badge {
+                font-size: 0.6rem;
+                padding: 4px 12px;
+            }
+
+            .hero {
+                padding: 40px 16px 24px;
+            }
+
+            .price-card {
+                padding: 12px 24px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .price-card .price {
+                font-size: 2.2rem;
+            }
+
+            .btn-primary {
+                padding: 14px 28px;
+                font-size: 0.95rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .services {
+                grid-template-columns: 1fr 1fr;
+                gap: 14px;
+                padding: 0 12px;
+            }
+
+            .service-card {
+                padding: 20px 12px;
+            }
+
+            .service-card .emoji {
+                font-size: 2rem;
+            }
+
+            .age-section {
+                padding: 24px 16px;
+                margin: 24px 12px;
+            }
+
+            .age-tags {
+                gap: 8px;
+            }
+
+            .age-tag {
+                padding: 8px 18px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .services {
+                grid-template-columns: 1fr;
+                max-width: 280px;
+            }
+        }
+
+        /* ── Floating glow ── */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-orb.orb1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(139, 92, 246, 0.12);
+            top: -120px;
+            right: -120px;
+        }
+
+        .glow-orb.orb2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(251, 191, 36, 0.07);
+            bottom: -60px;
+            left: -80px;
+        }
+    </style>
 </head>
 <body>
-  <div id="loader">
-    <div class="loader-logo">TB</div>
-    <h2>Tama<span>Blox</span></h2>
-    <div class="loading-track"><div class="loading-fill"></div></div>
-    <p>Menyiapkan pengalaman Roblox kamu...</p>
-  </div>
 
-  <div class="stars"></div>
-  <header class="nav">
-    <a class="brand" href="#"><b>TB</b><span>Tama</span>Blox</a>
-    <nav>
-      <a href="#layanan">Layanan</a>
-      <a href="#keunggulan">Keunggulan</a>
-      <a href="#cara">Cara Order</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <a class="btn small" href="#order">Order</a>
-    <button class="menu" aria-label="Menu">☰</button>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="orb orb1"></div><div class="orb orb2"></div>
-      <div class="hero-copy">
-        <div class="pill">🎙️ TAMABLOX • JASA ROBLOX</div>
-        <h1>Jasa Aktifkan<br><em>On Mic</em> Roblox</h1>
-        <p class="lead">Bikin pengalaman bermain Roblox kamu makin seru dengan fitur <b>Voice Chat</b>. Pilih layanan, ikuti proses order, dan siap ngobrol bersama teman.</p>
-        <div class="actions">
-          <a class="btn" href="#order">🚀 Order Sekarang</a>
-          <a class="btn ghost" href="#layanan">Lihat Layanan ↓</a>
+    <!-- ═══ LOADING SCREEN ═══ -->
+    <div id="loader" role="status" aria-label="Loading">
+        <div class="loader-ring"></div>
+        <div class="loader-text">TamaBlox</div>
+        <div class="loader-sub">memuat pengalaman</div>
+        <div class="loader-progress">
+            <div class="loader-progress-bar"></div>
         </div>
-        <div class="trust">
-          <span>⚡ Proses mudah</span><span>🎧 Voice Chat</span><span>💜 Tema TamaBlox</span>
+    </div>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <div class="main-content">
+
+        <!-- Floating orbs -->
+        <div class="glow-orb orb1"></div>
+        <div class="glow-orb orb2"></div>
+
+        <!-- Navbar -->
+        <nav>
+            <a href="#" class="nav-brand">
+                <span>🎮</span> TamaBlox
+            </a>
+            <span class="nav-badge">⚡ VoiceChat Ready</span>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                LEVEL UP! pengalaman Roblox mu
+            </div>
+
+            <h1>
+                dengan <span class="highlight">VoiceChat</span> <br />
+                <span class="highlight-gold">#HANYA25K</span>
+            </h1>
+
+            <p class="subtitle">
+                <strong>Aktifkan VoiceChat</strong> dan ubah umur akun Roblox kamu
+                dengan mudah. <strong>BLOXISTRY</strong> siap membantu!
+            </p>
+
+            <!-- Price display from first image -->
+            <div class="price-card">
+                <span class="label">
+                    Cuman
+                    <small>💎 sekali bayar</small>
+                </span>
+                <span class="price">25K</span>
+                <span class="label">
+                    BLOXISTRY
+                    <small>⚡ instan</small>
+                </span>
+            </div>
+
+            <a href="#" class="btn-primary" onclick="alert('Hubungi kami via WhatsApp / Discord untuk order!')">
+                <span class="icon">🚀</span>
+                Aktifkan Sekarang
+            </a>
+        </section>
+
+        <!-- Service Cards -->
+        <div class="services">
+            <div class="service-card">
+                <span class="emoji">👶</span>
+                <h3>Kids</h3>
+                <p>Ubah ke mode anak</p>
+                <span class="tag">request</span>
+            </div>
+            <div class="service-card">
+                <span class="emoji">🧑</span>
+                <h3>Select</h3>
+                <p>Mode terbatas</p>
+                <span class="tag">request</span>
+            </div>
+            <div class="service-card">
+                <span class="emoji">🧔</span>
+                <h3>Adult</h3>
+                <p>Akses penuh 18+</p>
+                <span class="tag">request</span>
+            </div>
         </div>
-      </div>
-      <div class="hero-poster">
-        <div class="poster-frame"><img src="assets/poster-voicechat.png" alt="Poster TamaBlox Voice Chat"></div>
-        <div class="floating-card">🎙️ <b>ON MIC</b><small>Roblox Voice Chat</small></div>
-      </div>
-    </section>
 
-    <section id="layanan" class="section">
-      <div class="section-title"><span>LAYANAN</span><h2>Yang kamu butuhkan ada di sini</h2><p>Desain terinspirasi dari poster yang kamu kirim, dengan nuansa ungu neon.</p></div>
-      <div class="cards">
-        <article class="card featured">
-          <div class="icon">🎙️</div><label>PALING DICARI</label>
-          <h3>Aktifkan On Mic Roblox</h3>
-          <p>Jasa untuk membantu mengaktifkan fitur Voice Chat / On Mic pada akun Roblox kamu.</p>
-          <ul><li>✓ Panduan proses jelas</li><li>✓ Tampilan order simpel</li><li>✓ Support via kontak admin</li></ul>
-          <a class="card-btn" href="#order">Pilih Layanan →</a>
-        </article>
-        <article class="card">
-          <div class="icon">🎂</div>
-          <label>OPSIONAL</label>
-          <h3>Bantuan Pengaturan Umur</h3>
-          <p>Bantuan informasi dan panduan terkait pengaturan usia akun Roblox sesuai opsi yang tersedia di Roblox.</p>
-          <ul><li>✓ Informasi langkah-langkah</li><li>✓ Cek persyaratan</li><li>✓ Bantuan jika diperlukan</li></ul>
-          <a class="card-btn" href="#order">Tanya Admin →</a>
-        </article>
-      </div>
-    </section>
+        <!-- Age Request Section (from second image) -->
+        <section class="age-section">
+            <h2>
+                🛠️ <span class="highlight">Ubah Umur Akun</span>
+            </h2>
+            <p class="sub">
+                Bisa request apapun yang kamu mau:
+            </p>
+            <div class="age-tags">
+                <span class="age-tag">👶 Kids <span class="badge">+</span></span>
+                <span class="age-tag">🧑 Select <span class="badge">+</span></span>
+                <span class="age-tag">🧔 Adult <span class="badge gold">18+</span></span>
+            </div>
+            <p style="margin-top: 18px; font-size: 0.8rem; color: var(--purple-400);">
+                ⚡ Semua request diproses cepat &amp; aman
+            </p>
+        </section>
 
-    <section class="poster-section">
-      <div class="poster-copy"><span>POSTER TAMABLOX</span><h2>Upgrade pengalaman<br>Roblox kamu.</h2><p>Visual ungu, glow neon, dan karakter Roblox menjadi inspirasi utama tampilan website ini.</p></div>
-      <div class="poster-grid">
-        <img src="assets/poster-umur.png" alt="Poster layanan TamaBlox umur">
-        <img src="assets/poster-voicechat.png" alt="Poster layanan TamaBlox voice chat">
-      </div>
-    </section>
+        <!-- Footer -->
+        <footer>
+            <p>
+                © 2026 <span class="brand-foot">TamaBlox</span> ·
+                <span class="blox">BLOXISTRY</span> · Roblox VoiceChat Activation
+            </p>
+            <p style="margin-top: 6px; font-size: 0.75rem; color: var(--purple-500);">
+                🔥 LEVEL UP pengalaman Roblox mu sekarang!
+            </p>
+        </footer>
+    </div>
 
-    <section id="keunggulan" class="section compact">
-      <div class="section-title"><span>KENAPA TAMABLOX?</span><h2>Simple, jelas, dan nyaman</h2></div>
-      <div class="features">
-        <div><b>01</b><h3>Mudah</h3><p>Informasi layanan dibuat singkat agar gampang dipahami.</p></div>
-        <div><b>02</b><h3>Modern</h3><p>Tampilan responsive dengan efek glow khas tema ungu.</p></div>
-        <div><b>03</b><h3>Support</h3><p>Kamu bisa menghubungi admin untuk menanyakan proses order.</p></div>
-      </div>
-    </section>
+    <!-- ═══ SCRIPT ═══ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loader after progress finishes + a little extra
+            const loader = document.getElementById('loader');
+            const progressBar = document.querySelector('.loader-progress-bar');
 
-    <section id="cara" class="steps">
-      <div class="section-title"><span>CARA ORDER</span><h2>3 langkah untuk mulai</h2></div>
-      <div class="step-grid">
-        <div><strong>1</strong><h3>Pilih layanan</h3><p>Pilih jasa yang ingin kamu gunakan.</p></div>
-        <div><strong>2</strong><h3>Hubungi admin</h3><p>Kirim detail yang diperlukan melalui kontak resmi.</p></div>
-        <div><strong>3</strong><h3>Ikuti proses</h3><p>Admin akan memberikan arahan berikutnya.</p></div>
-      </div>
-    </section>
+            // Ensure loader hides after animation completes
+            setTimeout(function() {
+                loader.classList.add('hidden');
+                // Enable scroll if needed (already visible)
+                document.body.style.overflow = 'auto';
+            }, 2800); // match progress animation duration + buffer
 
-    <section id="order" class="order">
-      <div><span>SIAP MULAI?</span><h2>Aktifkan On Mic Roblox kamu 🎙️</h2><p>Klik tombol di bawah untuk memulai order dengan TamaBlox.</p>
-      <a class="btn" href="https://wa.me/" target="_blank" rel="noopener">💬 Hubungi Admin</a></div>
-    </section>
+            // Fallback: if something goes wrong, hide after 4s
+            setTimeout(function() {
+                if (!loader.classList.contains('hidden')) {
+                    loader.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+            }, 4500);
 
-    <section id="faq" class="section faq">
-      <div class="section-title"><span>FAQ</span><h2>Pertanyaan umum</h2></div>
-      <details><summary>Apakah website ini sudah responsive?</summary><p>Ya. Tampilan menyesuaikan HP, tablet, dan desktop.</p></details>
-      <details><summary>Apakah data login Roblox diminta?</summary><p>Website ini tidak memiliki form untuk meminta password Roblox. Jangan pernah memberikan password atau kode keamanan kepada pihak lain.</p></details>
-      <details><summary>Bagaimana mengganti nomor WhatsApp admin?</summary><p>Edit link WhatsApp pada bagian Order di file <b>index.html</b>.</p></details>
-    </section>
-  </main>
+            // Smooth CTA click
+            document.querySelector('.btn-primary')?.addEventListener('click', function(e) {
+                // already handled via onclick
+            });
 
-  <footer><div class="brand"><b>TB</b><span>Tama</span>Blox</div><p>© 2026 TamaBlox. Roblox adalah merek dagang dari Roblox Corporation.</p></footer>
-  <script src="script.js"></script>
+            // Age tag click feedback
+            document.querySelectorAll('.age-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const label = this.textContent.trim().split(' ')[0];
+                    alert(`📌 Request: ${label}\nHubungi admin TamaBlox untuk proses!`);
+                });
+            });
+
+            // Service card click feedback
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = this.querySelector('h3')?.textContent || 'service';
+                    alert(`📌 Pilih mode: ${title}\nAdmin TamaBlox akan segera merespon!`);
+                });
+            });
+
+            console.log('🎮 TamaBlox · LEVEL UP your Roblox VoiceChat!');
+        });
+    </script>
+
 </body>
 </html>
